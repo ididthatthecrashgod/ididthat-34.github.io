@@ -92,8 +92,8 @@
             // Clear previous results
             document.getElementById("ipInfo").innerHTML = "";
 
-            // Call the ip-api API using HTTPS to avoid mixed content issues
-            fetch(`https://ip-api.com/json/${ip}`)
+            // Use CORS proxy (CORS Anywhere)
+            fetch(`https://cors-anywhere.herokuapp.com/https://ip-api.com/json/${ip}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === "fail") {

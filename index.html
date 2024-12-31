@@ -93,7 +93,8 @@
             document.getElementById("ipInfo").innerHTML = "";
 
             // Call the API with the entered IP address
-            fetch(`https://ipinfo.io/${ip}/json?token=6d308f10ba4f27`)
+            // Use a CORS proxy if you're testing locally (for cross-origin issues)
+            fetch(`https://cors-anywhere.herokuapp.com/https://ipinfo.io/${ip}/json?token=6d308f10ba4f27`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {

@@ -94,28 +94,35 @@
 
             // Call the API with the entered IP address
             // Use a CORS proxy if you're testing locally (for cross-origin issues)
-            fetch(`https://cors-anywhere.herokuapp.com/https://ipinfo.io/${ip}/json?token=6d308f10ba4f27`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        document.getElementById("ipInfo").innerHTML = "<p style='color: red;'>Error: " + data.error.message + "</p>";
-                    } else {
-                        let infoHTML = `
-                            <p><span>IP:</span> ${data.ip}</p>
-                            <p><span>Hostname:</span> ${data.hostname || "N/A"}</p>
-                            <p><span>City:</span> ${data.city || "N/A"}</p>
-                            <p><span>Region:</span> ${data.region || "N/A"}</p>
-                            <p><span>Country:</span> ${data.country || "N/A"}</p>
-                            <p><span>Location:</span> ${data.loc || "N/A"}</p>
-                            <p><span>Organization:</span> ${data.org || "N/A"}</p>
-                        `;
-                        document.getElementById("ipInfo").innerHTML = infoHTML;
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching IP info:", error);
-                    document.getElementById("ipInfo").innerHTML = "<p style='color: red;'>Failed to fetch data. Please try again later.</p>";
-                });
+fetch(`https://cors-anywhere.herokuapp.com/https://ipinfo.io/${ip}/json?token=6d308f10ba4f27`)
+    .then(response => response.text())  // Get the raw response as text first
+    .then(data => {
+        console.log(data);  // Log the raw response to check its format
+        try {
+            const jsonData = JSON.parse(data);  // Try to parse it manually
+            if (jsonData.error) {
+                document.getElementById("ipInfo").innerHTML = "<p style='color: red;'>Error: " + jsonData.error.message + "</p>";
+            } else {
+                let infoHTML = `
+                    <p><span>IP:</span> ${jsonData.ip}</p>
+                    <p><span>Hostname:</span> ${jsonData.hostname || "N/A"}</p>
+                    <p><span>City:</span> ${jsonData.city || "N/A"}</p>
+                    <p><span>Region:</span> ${jsonData.region || "N/A"}</p>
+                    <p><span>Country:</span> ${jsonData.country || "N/A"}</p>
+                    <p><span>Location:</span> ${jsonData.loc || "N/A"}</p>
+                    <p><span>Organization:</span> ${jsonData.org || "N/A"}</p>
+                `;
+                document.getElementById("ipInfo").innerHTML = infoHTML;
+            }
+        } catch (e) {
+            document.getElementById("ipInfo").innerHTML = "<p style='color: red;'>Error parsing JSON: " + e.message + "</p>";
+        }
+    })
+    .catch(error => {
+        console.error("Error fetching IP info:", error);
+        document.getElementById("ipInfo").innerHTML = "<p style='color: red;'>Failed to fetch data. Please try again later.</p>";
+    });
+
         }
     </script>
 </body>

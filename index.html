@@ -3,10 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Display GitHub Image</title>
+    <title>Toxin Squad</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Background Image */
+        body {
+            background-image: url('https://raw.githubusercontent.com/ididthatthecrashgod/sfdghdfghjdghf/main/images/lol%20(2).gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        h1 {
+            font-size: 60px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+        }
+
+        /* About Section */
+        .about, .mission, .contact {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            margin: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .about h3, .mission h3, .contact h3 {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* Team Section */
+        .team {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+
+        .team-member {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            width: 200px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: scale(1.1);
+        }
+
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        /* Contact Form */
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .contact-form button {
+            padding: 10px 20px;
+            background-color: #00FF00;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .contact-form button:hover {
+            background-color: #00cc00;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        footer p {
+            color: #bbb;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Displaying Image from GitHub</h1>
-    <img src="https://raw.githubusercontent.com/ididthatthecrashgod/sfdghdfghjdghf/main/images/lol%20(2).gif" alt="Funny GIF">
+    <header>
+        <h1>Toxin Squad</h1>
+        <h2>We operate in the shadows.</h2>
+    </header>
+
+    <section class="about">
+        <h3>About Toxin Squad</h3>
+        <p>We are a group of elite cyber experts dedicated to disrupting the digital world and leaving our mark on the internet. We believe in freedom, secrecy, and chaos.</p>
+    </section>
+
+    <section class="mission">
+        <h3>Our Mission</h3>
+        <p>Our mission is to expose hidden truths, challenge systems of control, and fight for the rights of the oppressed. We are a symbol of resistance in the digital age.</p>
+    </section>
+
+    <section class="team">
+        <div class="team-member">
+            <img src="https://via.placeholder.com/100" alt="Member 1">
+            <h4>Shadow</h4>
+            <p>Lead Hacker</p>
+        </div>
+        <div class="team-member">
+            <img src="https://via.placeholder.com/100" alt="Member 2">
+            <h4>Viper</h4>
+            <p>Encryption Expert</p>
+        </div>
+        <div class="team-member">
+            <img src="https://via.placeholder.com/100" alt="Member 3">
+            <h4>Rogue</h4>
+            <p>System Architect</p>
+        </div>
+    </section>
+
+    <section class="contact">
+        <h3>Contact Us</h3>
+        <p>If you want to join us or have a message for the squad, fill out the form below.</p>
+        <div class="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="4" required></textarea>
+            <button type="submit">Send Message</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Toxin Squad. All rights reserved. | Made with chaos.</p>
+    </footer>
 </body>
 </html>

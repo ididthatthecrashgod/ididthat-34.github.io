@@ -3,108 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IP Geolocator</title>
+    <title>IP Information Lookup</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
             margin: 0;
             padding: 0;
-            background-color: #f0f4f8;
-            color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            box-sizing: border-box;
         }
+
         .container {
-            max-width: 600px;
-            width: 100%;
+            background-color: #1e1e1e;
             padding: 30px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 400px;
             text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
         }
+
         h1 {
+            color: #f1f1f1;
             margin-bottom: 20px;
-            font-size: 24px;
-            color: #007BFF;
         }
+
         input[type="text"] {
-            width: calc(100% - 20px);
             padding: 10px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+            width: 100%;
+            border-radius: 5px;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
             font-size: 16px;
         }
+
         button {
             padding: 10px 20px;
-            font-size: 16px;
-            color: #ffffff;
-            background-color: #007BFF;
+            background-color: #6200ea;
+            color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s;
         }
+
         button:hover {
-            background-color: #0056b3;
+            background-color: #3700b3;
         }
-        .output {
+
+        .info {
             margin-top: 20px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #f9f9f9;
             text-align: left;
-            font-size: 14px;
-            line-height: 1.6;
         }
+
+        .info p {
+            margin: 5px 0;
+        }
+
+        .info span {
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>IP Geolocator</h1>
-        <input type="text" id="ipInput" placeholder="Enter an IP address (leave empty for your IP)">
-        <button id="locateBtn">Get Location</button>
-        <div class="output" id="output">
-            Enter an IP address and click the button to see geolocation details.
-        </div>
+        <h1>IP Info Lookup</h1>
+        <input type="text" id="ipInput" placeholder="Enter IP Address" />
+        <button onclick="fetchIPInfo()">Get Info</button>
+        <div class="info" id="ipInfo"></div>
     </div>
 
     <script>
-        document.getElementById('locateBtn').addEventListener('click', async () => {
-            const outputDiv = document.getElementById('output');
-            const ipInput = document.getElementById('ipInput').value.trim();
-            const ip = ipInput || 'json';
-
-            outputDiv.textContent = 'Fetching location...';
-
-            try {
-                const response = await fetch(`https://ipapi.co/${ip}/json/`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                if (data.error) {
-                    throw new Error(data.reason);
-                }
-
-                outputDiv.innerHTML = `
-                    <p><strong>IP:</strong> ${data.ip}</p>
-                    <p><strong>City:</strong> ${data.city}</p>
-                    <p><strong>Region:</strong> ${data.region}</p>
-                    <p><strong>Country:</strong> ${data.country_name}</p>
-                    <p><strong>Latitude:</strong> ${data.latitude}</p>
-                    <p><strong>Longitude:</strong> ${data.longitude}</p>
-                    <p><strong>ISP:</strong> ${data.org}</p>
-                `;
-            } catch (error) {
-                outputDiv.textContent = `Error fetching location: ${error.message}`;
+        function fetchIPInfo() {
+            const ip = document.getElementById("ipInput").value.trim();
+            if (ip === "") {
+                alert("Please enter a valid IP address.");
+                return;
             }
-        });
+
+            // Clear previous results
+            document.getElementById("ipInfo").innerHTML = "";
+
+            // Call the API with the entered IP address
+            fetch(`https://ipinfo.io/${ip}/json?token=YOUR_API_TOKEN`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("ipInfo").innerHTML = "<p style='color: red;'>Error: " + data.error.message + "</p>";
+                    } else {
+                        let infoHTML = `
+                            <p><span>IP:</span> ${data.ip}</p>
+                            <p><span>Hostname:</span> ${data.hostname || "N/A"}</p>
+                            <p><span>City:</span> ${data.city || "N/A"}</p>
+                            <p><span>Region:</span> ${data.region || "N/A"}</p>
+                            <p><span>Country:</span> ${data.country || "N/A"}</p>
+                            <p><span>Location:</span> ${data.loc || "N/A"}</p>
+                            <p><span>Organization:</span> ${data.org || "N/A"}</p>
+                        `;
+                        document.getElementById("ipInfo").innerHTML = infoHTML;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching IP info:", error);
+                    document.getElementById("ipInfo").innerHTML = "<p style='color: red;'>Failed to fetch data. Please try again later.</p>";
+                });
+        }
     </script>
 </body>
 </html>

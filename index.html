@@ -92,8 +92,8 @@
             // Clear previous results
             document.getElementById("ipInfo").innerHTML = "";
 
-            // Call the ip-api API to get information about the IP
-            fetch(`http://ip-api.com/json/${ip}`)
+            // Call the ip-api API using HTTPS to avoid mixed content issues
+            fetch(`https://ip-api.com/json/${ip}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === "fail") {
